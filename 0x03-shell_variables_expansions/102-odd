@@ -1,2 +1,2 @@
 #!/bin/bash
-echo -d . - - | cut -d . -f l
+perl -lne `print if $. % 2 ==1`
