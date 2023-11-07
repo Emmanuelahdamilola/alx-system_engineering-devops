@@ -1,29 +1,26 @@
 #!/usr/bin/env bash
 
-# Update the package list to ensure we have the latest package information
-apt-get update
+# Install nginx
+sudo apt-get -y update
+sudo apt-get install -y nginx
 
-# Install Nginx
-apt-get install -y nginx
+# Create a directory for Nginx configuration
+mkdir /etc/nginx/html
 
-# Create an HTML file containing "Hello World!" in the default Nginx web directory
-echo "Hello World!" | tee /var/www/html/index.html
+# Create a sample HTML page
+echo "Hello World!" > /etc/nginx/html/index.html
 
-# Start Nginx (if it's not already running)
-service nginx start
+# Create a server block configuration for Nginx
+echo "server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
 
-# Ensure Nginx is set to start on boot
-update-rc.d nginx defaults
+	root /etc/nginx/html;
+	index index.html index.htm index.nginx-debian.html;
 
-# Configure Nginx to listen on port 80
-sed -i 's/listen 80 default_server;/listen 80;/' /etc/nginx/sites-available/default
+	server_name _;
+}
+" > /etc/nginx/sites-available/default
 
-# Reload Nginx configuration (to apply the changes without using systemctl)
-service nginx reload
-
-# Restart Nginx (without using systemctl)
-service nginx stop
-service nginx start
-
-# Test the Nginx server with curl
-response=$(curl -s -I http://localhost | grep "200 OK")
+# Restart Nginx to apply the new configuration
+nginx -s reload
