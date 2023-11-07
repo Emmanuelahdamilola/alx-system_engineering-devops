@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# This script installs Nginx with custom configurations:
+#    1. Nginx listens on port 80.
+#    2. When a GET request is made to the root, it returns a page containing "Hello World".
+#    3. It also configures a redirect from the root to https://www.google.com.
+
+# Install Nginx
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Replace the default server block configuration with a redirect
+string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.google.com permanent;"
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+
+# Restart Nginx to apply the new configuration
+service nginx restart
