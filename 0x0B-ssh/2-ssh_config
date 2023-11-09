@@ -51,6 +51,6 @@ Host *
     HashKnownHosts yes
     GSSAPIAuthentication yes
 
-Host 18.204.6.236
+Host  52.86.24.194
     IdentityFile ~/.ssh/school
     PasswordAuthentication no
