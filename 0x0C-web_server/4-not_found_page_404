@@ -8,7 +8,7 @@ sudo apt-get -y install nginx
 
 echo "Ceci n'est pas une page" > /etc/nginx/html/404.html
 # Replace the default server block configuration with a redirect
-string_for_replacement="server_name _;\n\terror_page 404 \/404.html;\nlocation = \/404.html {\n\t\troot \/etc\/nginc\/html;\n\t\tinternal;\n\t}"
+string_for_replacement="server_name _;\n\terror_page 404 \/404.html;\nlocation = \/404.html {\n\t\troot \/etc\/nginx\/html;\n\t\tinternal;\n\t}"
 sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
 # Restart Nginx to apply the new configuration
