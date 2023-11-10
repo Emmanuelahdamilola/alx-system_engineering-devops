@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
-
-# This script installs Nginx with the following configurations:
+# This script installs Nginx with custom configurations:
 #    1. Nginx listens on port 80.
-#    2. When queried at the root with a curl GET request, it returns a page containing "Ceci n'est pas une page."
+#    2. When a GET request is made to the root, it returns a page containing "Hello World".
+#    3. It also configures a redirect from the root to https://www.google.com.
+sudo apt-get -y update
+sudo apt-get -y install nginx
 
-# Install Nginx
-sudo apt-get update
-sudo apt-get install -y nginx
-
-# Create a custom 404 error page
 echo "Ceci n'est pas une page" > /etc/nginx/html/404.html
+# Replace the default server block configuration with a redirect
+string_for_replacement="server_name _;\n\terror_page 404 \/404.html;\nlocation = \/404.html {\n\t\troot \/etc\/nginc\/html;\n\t\tinternal;\n\t}"
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
-# Restart Nginx to apply the changes
-service nginx restart
-
+# Restart Nginx to apply the new configuration
+sudo service nginx restart
