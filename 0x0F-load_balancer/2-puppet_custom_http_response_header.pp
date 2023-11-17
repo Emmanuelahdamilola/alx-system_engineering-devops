@@ -6,19 +6,19 @@ exec { 'update':
 }
 
 # Install Nginx package
-package { 'nginx':
+-> package { 'nginx':
   ensure => 'present',
 }
 
 # Add custom HTTP header to Nginx configuration
-file_line { 'http_header':
+-> file_line { 'http_header':
   path  => '/etc/nginx/nginx.conf',
   match => 'http {',
   line  => "http {\n\tadd_header X-Served-By \"${hostname}\";",
 }
 
 # Restart Nginx service after updating configuration
-exec { 'run':
+-> exec { 'run':
   command => '/usr/sbin/service nginx restart',
 }
 
