@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Copy the default Nginx site configuration to the sites-enabled directory
+cp -r /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+# Restart the Nginx service to apply the changes
+service nginx restart
