@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Define a function to query DNS information and display the result
+
+fun() {
+    # Combine the second argument (subdomain) with the first argument (domain) and use dig to query DNS information
+    result=$(dig "$2.$1" | grep -A1 "ANSWER SECTION:" | tail -1)
+    
+    # Use awk to format and print the result in the specified format
+    echo "$2 $result" | awk '{print "The subdomain " $1 " is a " $5 " record and points to " $6}'
+}
+
+# Check the number of command-line arguments provided
+if [ "$#" -eq 1 ]; then
+    # If only one argument is provided, query and display information for default subdomains
+    fun "$1" "www"
+    fun "$1" "lb-01"
+    fun "$1" "web-01"
+    fun "$1" "web-02"
+elif [ "$#" -eq 2 ]; then
+    # If two arguments are provided, query and display information for the specified subdomain
+    fun "$1" "$2"
+fi
