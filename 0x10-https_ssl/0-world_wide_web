@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Define a function to query DNS information and display the result
 
 fun() {
