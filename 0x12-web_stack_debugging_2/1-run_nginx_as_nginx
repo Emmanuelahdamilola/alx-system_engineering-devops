@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Run Nginx as the nginx user
+
+# Stop the Apache2 server
+sudo pkill -f apache2
+
+# Pause for 10 seconds to ensure the server stops gracefully
+sleep 10
+
+# Change permissions on the Nginx configuration file
+sudo chmod 777 /etc/nginx/nginx.conf
+
+# Update listening ports in the default Nginx configuration
+sudo sed -i 's/80/8080/g' /etc/nginx/sites-enabled/default
+
+# Restart Nginx with the updated configuration
+sudo -u nginx nginx
+
