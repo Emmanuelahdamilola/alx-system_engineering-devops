@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Run the 'whoami' command as the specified user
+
+# Use sudo to execute a command as a different user
+sudo -u "$1" whoami
