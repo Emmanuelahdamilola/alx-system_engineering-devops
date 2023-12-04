@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
 Fetches TODO list progress for all employees using a REST API.
 """
