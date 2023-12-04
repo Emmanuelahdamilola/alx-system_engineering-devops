@@ -3,8 +3,8 @@
 Fetches TODO list progress for all employees using a REST API.
 """
 
-import requests
 import json
+import requests
 
 
 if __name__ == '__main__':
