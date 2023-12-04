@@ -6,6 +6,7 @@ Python script that, using this REST API, for a given employee ID, returns inform
 import requests
 import sys
 
+
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print(f"Usage: {sys.argv[0]} EMPLOYEE_ID")
