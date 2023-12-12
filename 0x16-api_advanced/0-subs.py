@@ -1,19 +1,31 @@
+#!/usr/bin/python3
+"""Query Reddit API to determine subreddit sub count
+"""
+
 import requests
 
+
 def number_of_subscribers(subreddit):
-    user_agent = '0x16-api_advanced-luna'
+    """Request number of subscribers of subreddit
+    from Reddit API
+    """
+    # set custom user-agent
+    user_agent = '0x16-api_advanced-chi'
     url = 'https://www.reddit.com/r/{}.json'.format(subreddit)
+
+    # custom user-agent avoids request limit
     headers = {'User-Agent': user_agent}
 
-    try:
-        response = requests.get(url, headers=headers, allow_redirects=False)
-        response.raise_for_status()  # Raise HTTPError for bad responses
-        data = response.json()['data']
-        page_data = data['children'][0]['data']
-        return page_data['subreddit_subscribers']
-    except requests.exceptions.RequestException as e:
-        print(f"Error during request: {e}")
-    except (KeyError, ValueError) as e:
-        print(f"Error parsing JSON: {e}")
+    r = requests.get(url, headers=headers, allow_redirects=False)
 
-    return 0
+    if r.status_code != 200:
+        return 0
+
+    # load response unit from json
+    data = r.json()['data']
+    # extract list of pages
+    pages = data['children']
+    # extract data from first page
+    page_data = pages[0]['data']
+    # return number of subreddit subs
+    return page_data['subreddit_subscribers']
